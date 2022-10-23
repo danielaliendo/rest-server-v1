@@ -57,16 +57,6 @@ const postUser = async (req, res = response) => {
         role,
     });
 
-    // Check if email already exists on database
-
-    const alreadyExist = await User.findOne({ email });
-
-    if (alreadyExist) {
-        return res.status(400).json({
-            error: `Email ${email} is already registered`
-        })
-    }
-
     // User password is encrypted
     const salt = bcrypt.genSaltSync(10);
     user.password = bcrypt.hashSync(password, salt);
