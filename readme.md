@@ -2,7 +2,7 @@
 
 ## How to use
 
-Clone this repository and navigate to rest-server-v1 folder, install packages using `npm install` and execute project it using `npm start`
+Clone this repository and navigate to rest-server-v1 folder, install packages using `npm install` and execute project using `npm start`
 
 ```sh
 git clone https://github.com/danielaliendo/rest-server-v1.git
