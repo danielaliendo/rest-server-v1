@@ -32,4 +32,4 @@ const UserSchema = Schema({
     },
 })
 
-module.export = model('User', UserSchema);
+module.exports = model('User', UserSchema)
