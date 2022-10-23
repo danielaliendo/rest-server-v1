@@ -21,7 +21,7 @@ const UserSchema = Schema({
     role: {
         type: String,
         required: [true, 'role is required'],
-        enum: ['ADMIN_ROLE', 'USER_ROLE']
+        enum: ['ADMIN_ROLE', 'USER_ROLE', 'SALES_ROLE']
     },
     img: {
         type: String,
@@ -30,6 +30,6 @@ const UserSchema = Schema({
         type: Boolean,
         default: true
     },
-})
+});
 
-module.exports = model('User', UserSchema)
+module.exports = model('User', UserSchema);
