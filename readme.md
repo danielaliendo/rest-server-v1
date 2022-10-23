@@ -24,5 +24,8 @@ Then open http://localhost:8080/ to see your app.
 - [express](http://expressjs.com/)
 - [cors](https://github.com/expressjs/cors#readme)
 
+## Database structure
+![img.png](database.png)
+
 ### Author:
 - Daniela Liendo | [LinkedIn](https://www.linkedin.com/in/daniela-liendo-026289189/) | [Email](mailto:danielaliendo@gmail.com)
