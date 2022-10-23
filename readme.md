@@ -9,7 +9,5 @@ Clone this repository and execute [`npm install`](https://docs.npmjs.com/cli/v6/
 - [express](http://expressjs.com/)
 - [cors](https://github.com/expressjs/cors#readme)
 
----
 ### Author:
 - Daniela Liendo | [LinkedIn](https://www.linkedin.com/in/daniela-liendo-026289189/) | [Email](mailto:danielaliendo@gmail.com)
----
