@@ -28,21 +28,30 @@ class Server {
         })
 
         this.app.put('/api', (req, res) => {
-            res.json({
+
+            // status code 400 means that the request cannot be fulfilled due to bad syntax by a client error.
+            res.status(400).json({
                 msg: 'put API'
             })
+
         })
 
         this.app.delete('/api', (req, res) => {
-            res.json({
+
+            // status code 500 given when no more specific message is suitable.
+            res.status(500).json({
                 msg: 'delete API'
             })
+
         })
 
         this.app.post('/api', (req, res) => {
-            res.json({
+
+            // status code 201 means that the request has been fulfilled and resulted in a new resource being created
+            res.status(201).json({
                 msg: 'post API'
             })
+
         })
 
     }
