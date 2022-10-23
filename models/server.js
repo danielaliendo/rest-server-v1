@@ -1,5 +1,6 @@
 const express = require('express');
 const cors = require('cors')
+const router = require('../routes/users')
 
 class Server {
 
@@ -7,6 +8,7 @@ class Server {
 
         this.app = express()
         this.port = process.env.PORT
+        this.usersPath = '/api/users'
 
         // middlewares
         this.middlewares()
@@ -19,44 +21,14 @@ class Server {
     middlewares() {
 
         this.app.use(cors())  // CORS
+        this.app.use(express.json()) // Read and parse body
         this.app.use(express.static('public')) // Public folder
 
     }
 
     routes() {
 
-        this.app.get('/api', (req, res) => {
-            res.status(403).json({
-                msg: 'get API'
-            })
-        })
-
-        this.app.put('/api', (req, res) => {
-
-            // status code 400 means that the request cannot be fulfilled due to bad syntax by a client error.
-            res.status(400).json({
-                msg: 'put API'
-            })
-
-        })
-
-        this.app.delete('/api', (req, res) => {
-
-            // status code 500 given when no more specific message is suitable.
-            res.status(500).json({
-                msg: 'delete API'
-            })
-
-        })
-
-        this.app.post('/api', (req, res) => {
-
-            // status code 201 means that the request has been fulfilled and resulted in a new resource being created
-            res.status(201).json({
-                msg: 'post API'
-            })
-
-        })
+        this.app.use(this.usersPath, router)
 
     }
 
