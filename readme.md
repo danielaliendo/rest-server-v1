@@ -2,6 +2,8 @@
 
 ## How to use
 
+🔵 [Live Demo](https://rest-server-dl.herokuapp.com/)
+
 Clone this repository and navigate to rest-server-v1 folder, install packages using `npm install` and execute project using `npm start`
 
 ```sh
