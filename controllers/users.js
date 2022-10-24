@@ -3,34 +3,82 @@ const {validationResult} = require('express-validator');
 const bcrypt = require('bcryptjs');
 const User = require('../models/user');
 
-const getUsers = (req, res = response) => {
+const getUsers = async (req, res = response) => {
 
-    const {nombre = 'Usuari@ anónimo', key} = req.query;
+    const {limit = 5, from = 0} = req.query
+    const query = {status: true}
 
-    res.status(403).json({
-        msg: 'get API',
-        nombre,
-        key
+    if (isNaN(from)) {
+        return res.status(400).json([
+            {
+                "value": from,
+                "msg": "from must be a number",
+                "param": "from",
+                "location": "query"
+            },
+        ])
+    }
+
+    if (isNaN(limit)) {
+        return res.status(400).json([
+            {
+                "value": limit,
+                "msg": "limit must be a number",
+                "param": "limit",
+                "location": "query"
+            },
+        ])
+    }
+
+    const [count, users] = await Promise.all([
+        User.countDocuments(query),
+        User.find(query)
+            .skip(!isNaN(from) ? Number(from) : 0)
+            .limit(!isNaN(from) ? Number(limit) : 5)
+    ])
+
+    res.status(200).json({
+        count,
+        users
     })
 
 };
 
-const putUser = (req, res = response) => {
+const putUser = async (req, res = response) => {
 
     const {id} = req.params;
-    // status code 400 means that the request cannot be fulfilled due to bad syntax by a client error.
-    res.status(400).json({
+
+    const {_id, password, google, ...params} = req.body;
+
+    if (password) {
+        // User password is encrypted
+        const salt = bcrypt.genSaltSync(10);
+        params.password = bcrypt.hashSync(password, salt);
+    }
+
+    const user = await User.findByIdAndUpdate(id, params, {new: true});
+
+    res.status(200).json({
         msg: 'put API',
-        id
+        user
     });
 
 };
 
-const deleteUser = (req, res = response) => {
-    // status code 500 given when no more specific message is suitable.
-    res.status(500).json({
-        msg: 'delete API'
+const deleteUser = async (req, res = response) => {
+
+    const {id} = req.params;
+
+    // Delete user permanently from the database
+    // const user = await User.findByIdAndDelete(id);
+
+    // Change the user state to false
+    const user = await User.findByIdAndUpdate(id, {status: false}, {new: true});
+
+    res.status(200).json({
+       id
     })
+
 };
 
 const postUser = async (req, res = response) => {

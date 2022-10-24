@@ -10,16 +10,26 @@ const {
 } = require('../controllers/users');
 const {
     validateRolValue,
-    validateIfEmailAlreadyExist
+    validateIfEmailAlreadyExist,
+    validateIfUserExistById
 } = require('../helpers/db-validators');
 
 const router = Router();
 
 router.get('/', getUsers);
 
-router.put('/:id', putUser);
+router.put('/:id', [
+    check('id', 'id is not a valid mongo id').isMongoId(),
+    check('id').custom(validateIfUserExistById),
+    check('role').custom(validateRolValue),
+    fieldsValidator
+], putUser);
 
-router.delete('/', deleteUser);
+router.delete('/:id', [
+    check('id', 'id is not a valid mongo id').isMongoId(),
+    check('id').custom(validateIfUserExistById),
+    fieldsValidator
+], deleteUser);
 
 router.post('/', [
     check('name', 'name is required').not().isEmpty(),
