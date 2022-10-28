@@ -1,5 +1,4 @@
-const Role = require('../models/role');
-const User = require('../models/user');
+const {User, Role} = require('../models');
 
 /**
  * @description Check role exists in the roles collection

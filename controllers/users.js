@@ -1,7 +1,7 @@
 const {response} = require('express');
 const {validationResult} = require('express-validator');
 const bcrypt = require('bcryptjs');
-const User = require('../models/user');
+const {User} = require('../models');
 
 const getUsers = async (req, res = response) => {
 
@@ -69,14 +69,12 @@ const deleteUser = async (req, res = response) => {
 
     const {id} = req.params;
 
-    // Delete user permanently from the database
-    // const user = await User.findByIdAndDelete(id);
-
-    // Change the user state to false
+    userAuthenticated = req.user
     const user = await User.findByIdAndUpdate(id, {status: false}, {new: true});
 
     res.status(200).json({
-       id
+        user,
+        userAuthenticated
     })
 
 };
