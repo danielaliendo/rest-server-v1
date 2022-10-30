@@ -5,5 +5,5 @@ const roleValidator = require('./validate-role');
 module.exports = {
   ...fieldsValidator,
   ...jwtValidator,
-  ...roleValidator
+  ...roleValidator,
 }
