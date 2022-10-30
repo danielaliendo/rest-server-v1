@@ -1,4 +1,4 @@
-# Rest Server
+# Cafe App - Rest Server
 
 ## How to use
 
@@ -16,13 +16,23 @@ npm start
 Then open http://localhost:8080/ to see your app.
 
 ## ENV
-- You can set the environment variable `PORT` to tell your web server what port to listen on:
-  - PORT: 8080 (default)
+
+As an example.env file, the application requires these environment variables to work:
+
+- `PORT`: port server connection
+- `MONGO_CNN`: mongo database connection string - [Mongo DB](https://www.mongodb.com/)
+- `SECRET_PRIVATED_KEY`: a secret private key to generate and verify jwt tokens
+- `GOOGLE_ON_AUTH_CLIENT_ID`:  OAuth Client ID - [Google Authentication](https://developers.google.com/identity/sign-in/web/sign-in)
 
 ## Dependencies
 - [dotenv](https://github.com/motdotla/dotenv#readme)
 - [express](http://expressjs.com/)
 - [cors](https://github.com/expressjs/cors#readme)
+- express
+- express-validator
+- google-auth-library
+- jsonwebtoken
+- mongoose 
 
 ## Database structure
 ![img.png](database.png)
