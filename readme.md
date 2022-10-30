@@ -24,6 +24,9 @@ As an example.env file, the application requires these environment variables to 
 - `SECRET_PRIVATED_KEY`: a secret private key to generate and verify jwt tokens
 - `GOOGLE_ON_AUTH_CLIENT_ID`:  OAuth Client ID - [Google Authentication](https://developers.google.com/identity/sign-in/web/sign-in)
 
+## API DOCS
+- [See documentation](https://documenter.getpostman.com/view/14051871/2s8YRdtbgU#84123c9f-183d-4a79-9f6c-a47e78614037)
+
 ## Dependencies
 - [dotenv](https://github.com/motdotla/dotenv#readme)
 - [express](http://expressjs.com/)
