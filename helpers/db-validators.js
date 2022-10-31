@@ -1,4 +1,4 @@
-const {User, Role} = require('../models');
+const {User, Role, Category, Product} = require('../models');
 
 /**
  * @description Check role exists in the roles collection
@@ -8,19 +8,19 @@ const {User, Role} = require('../models');
 
 const validateRolValue = async (role = '') => {
 
-    try {
+  try {
 
-        const roleExist = await Role.findOne({role})
-        if (!roleExist) {
-            throw new Error(`The role ${role} is not registered in the database`)
-        }
-
-    } catch (e) {
-
-        console.log(e)
-        throw new Error(e)
-
+    const roleExist = await Role.findOne({role})
+    if (!roleExist) {
+      throw new Error(`The role ${role} is not registered in the database`)
     }
+
+  } catch (e) {
+
+    console.log(e)
+    throw new Error(e)
+
+  }
 
 }
 
@@ -32,20 +32,20 @@ const validateRolValue = async (role = '') => {
 
 const validateIfEmailAlreadyExist = async (email = '') => {
 
-    try {
+  try {
 
-        const emailAlreadyExist = await User.findOne({email})
+    const emailAlreadyExist = await User.findOne({email})
 
-        if (emailAlreadyExist) {
-            throw new Error(`Email ${email} already exist in the database`)
-        }
-
-    } catch (e) {
-
-        console.log(e)
-        throw new Error(e)
-
+    if (emailAlreadyExist) {
+      throw new Error(`Email ${email} already exist in the database`)
     }
+
+  } catch (e) {
+
+    console.log(e)
+    throw new Error(e)
+
+  }
 
 }
 
@@ -57,25 +57,65 @@ const validateIfEmailAlreadyExist = async (email = '') => {
 
 const validateIfUserExistById = async (id = '') => {
 
-    try {
+  try {
 
-        const userExist = await User.findById(id)
+    const userExist = await User.findById(id)
 
-        if (!userExist) {
-            throw new Error(`There is no registered user with the id ${id}`)
-        }
-
-    } catch (e) {
-
-        console.log(e)
-        throw new Error(e)
-
+    if (!userExist) {
+      throw new Error(`There is no registered user with the id ${id}`)
     }
+
+  } catch (e) {
+
+    console.log(e)
+    throw new Error(e)
+
+  }
+
+}
+
+const validateIfCategoryIdExist = async (id) => {
+
+  try {
+
+    const category = await Category.findById(id)
+
+    if (!category) {
+      throw new Error(`There is no category with the id ${id}`)
+    }
+
+  } catch (e) {
+
+    console.log(e)
+    throw new Error(e)
+
+  }
+
+}
+
+const validateIfProductIdExist = async (id) => {
+
+  try {
+
+    const product = await Product.findById(id)
+
+    if (!product) {
+      throw new Error(`There is no product with the id ${id}`)
+    }
+
+  } catch (e) {
+
+    console.log(e)
+    throw new Error(e)
+
+  }
 
 }
 
 module.exports = {
-    validateRolValue,
-    validateIfEmailAlreadyExist,
-    validateIfUserExistById
+  validateRolValue,
+  validateIfEmailAlreadyExist,
+  validateIfUserExistById,
+  validateIfCategoryIdExist,
+  validateIfProductIdExist
 }
