@@ -123,7 +123,7 @@ const validateCollectionsAllowed = (c = '', collections = []) => {
   const isAllowed = collections.includes(c)
 
   if (!isAllowed) {
-    throw new Error(`The collection ${c} not allowed. Collections allowed: ${collections.toString()}`)
+    return new Error(`The collection ${c} not allowed. Collections allowed: ${collections.toString()}`)
   }
 
   return true

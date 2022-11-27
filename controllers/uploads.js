@@ -1,8 +1,10 @@
 const {response, request} = require('express');
-const {uploadFile} = require("../helpers");
-const {User, Product, Category} = require("../models");
 const path = require("path");
 const fs = require("fs");
+const cloudinary = require('cloudinary').v2
+cloudinary.config(process.env.CLOUDINARY_URL)
+const {uploadFile} = require("../helpers");
+const {User, Product, Category} = require("../models");
 
 const loadFile = async (req = request, res = response) => {
 
@@ -19,6 +21,7 @@ const loadFile = async (req = request, res = response) => {
 
 };
 
+/*
 const updateImage = async (req = request, res = response) => {
 
   const {id, collection} = req.params
@@ -83,6 +86,7 @@ const updateImage = async (req = request, res = response) => {
   }
 
 };
+ */
 
 const getImage = async (req = request, res = response) => {
 
@@ -141,8 +145,101 @@ const getImage = async (req = request, res = response) => {
 
 };
 
+const updateImageCloudinary = async (req = request, res = response) => {
+
+  const {id, collection} = req.params
+
+  let model
+
+  switch (collection) {
+    case 'users':
+      try {
+
+        model = await User.findById(id)
+        if (!model) {
+          return res.status(400).json({
+            msg: `There is no user with id ${id}`
+          })
+        }
+
+      } catch (e) {
+        res.status(500).json({
+          msg: e
+        })
+      }
+      break;
+    case 'products':
+      try {
+        model = await Product.findById(id)
+        if (!model) {
+          return res.status(400).json({
+            msg: `There is no product with id ${id}`
+          })
+        }
+      } catch (e) {
+        res.status(500).json({
+          msg: e
+        })
+      }
+      break;
+    case 'categories':
+      try {
+        model = await Category.findById(id)
+        if (!model) {
+          return res.status(400).json({
+            msg: `There is no category with id ${id}`
+          })
+        }
+      } catch (e) {
+        res.status(500).json({
+          msg: e
+        })
+      }
+      break;
+    default:
+      return res.status(500).json({
+        msg: `A model associated with this collection has not been found ${collection}`
+      })
+  }
+
+  if (model.img) {
+
+    const nameArr = model.img.split('/');
+    const name = nameArr[nameArr.length - 1]
+    const [public_id] = name.split('.')
+    cloudinary.uploader.destroy(public_id)
+
+  }
+
+  const {tempFilePath} = req.files.file
+
+  try {
+
+    const {secure_url} = await cloudinary.uploader.upload(tempFilePath)
+    console.log(secure_url)
+    model.img = secure_url
+    await model.save();
+
+    res.status(200).json({
+      model,
+      tempFilePath,
+      secure_url
+    })
+
+  } catch (e) {
+
+    console.log(e)
+    res.status(500).json({
+      msg: e
+    })
+
+  }
+
+};
+
+
 module.exports = {
   loadFile,
-  updateImage,
-  getImage
+  getImage,
+  updateImageCloudinary
 }
