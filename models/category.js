@@ -15,6 +15,9 @@ const CategorySchema = Schema({
     type: Schema.Types.ObjectId,
     ref: 'User',
     required: [true, 'user ref is required']
+  },
+  img: {
+    type: String
   }
 });
 
