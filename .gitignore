@@ -3,3 +3,7 @@
 # JetBrains IDE
 .idea/
 .env
+
+uploads/users/**.*
+uploads/products/**.*
+uploads/categories/**.*
